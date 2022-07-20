@@ -30,7 +30,16 @@ explore: catalog_product_entity_decimal {}
 
 explore: catalog_eav_attribute {}
 
-explore: catalog_product_entity {}
+explore: catalog_product_entity {
+  join: catalog_product_entity_int {
+    relationship: one_to_one
+    sql_on: ${catalog_product_entity.entity_id} = ${catalog_product_entity_int.entity_id} ;;
+  }
+  join: cataloginventory_stock_item{
+    relationship: one_to_one
+    sql_on: ${catalog_product_entity.entity_id} = ${cataloginventory_stock_item.product_id} ;;
+  }
+}
 
 explore: catalog_product_entity_media_gallery {}
 
@@ -237,6 +246,10 @@ explore: sales_order {
     type: left_outer
     sql_on: ${sales_order.customer_group_id} = ${customer_group.customer_group_id} ;;
     relationship: many_to_one
+  }
+  join: sales_order_payment {
+    sql_on: ${sales_order.entity_id} = ${sales_order_payment.parent_id} ;;
+    relationship: one_to_one
   }
 }
 
