@@ -251,6 +251,10 @@ explore: sales_order {
     sql_on: ${sales_order.entity_id} = ${sales_order_payment.parent_id} ;;
     relationship: one_to_one
   }
+  join: sales_order_item{
+    relationship: one_to_one
+    sql_on: ${sales_order.entity_id} =${sales_order_item.order_id};;
+  }
 }
 
 explore: sales_order_aggregated_created {}
